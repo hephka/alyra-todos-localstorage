@@ -1,17 +1,26 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import Todos from "./components/Todos"
 import ModeSwitch from "./components/ModeSwitch"
 
 function App() {
 
-  const [ mode ] = useState("light")
+  const getLocalStorage = () => localStorage.getItem('mode') || 'light'
+
+  const [ mode, setMode ] = useState(getLocalStorage)
+
+  useEffect(() => {
+    localStorage.setItem('mode', mode)
+  }, [mode])
+
   const modeClass = mode === "dark" ? "bg-dark text-white" : ""
+  console.log(mode)
 
   return (
-    <div className={`container my-4 ${modeClass}`} >
+    <div className={`${modeClass}`}>
+      <div className={`container my-4 ${modeClass}`} >
       <div className="App-title__switch d-flex justify-content-between flex-wrap align-items-center mb-5">
       <h1 className="text-center display-1">ToDos App</h1>
-      <ModeSwitch />
+      <ModeSwitch mode={mode} setMode={setMode} />
       </div>
       <Todos />
       <p className="mt-5">
@@ -25,6 +34,7 @@ function App() {
           www.flaticon.com
         </a>
       </p>
+    </div>
     </div>
   )
 }

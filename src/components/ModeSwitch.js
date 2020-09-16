@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 
-const ModeSwitch = () => {
+const ModeSwitch = (props) => {
 
-  const getLocalStorage = () => localStorage.getItem('mode') || 'light'
-
-  const [ mode, setMode ] = useState(getLocalStorage)
+  const {mode, setMode} = props
 
   const hanleModeChange = () => {
     setMode((mode) => (mode === "dark" ? "light" : "dark"))
   }
-
-  useEffect(() => {
-    localStorage.setItem('mode', mode)
-  }, [mode])
 
   return (
     <div className="form-check form-switch">
